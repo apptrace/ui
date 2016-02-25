@@ -4,7 +4,7 @@
   "description": "UI for Yet Another Dapper ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/yet-another-dapper/ui/issues"
   },
-  "homepage": "https://github.com/yet-another-dapper/ui#readme"
+  "homepage": "https://github.com/yet-another-dapper/ui#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^0.36.8"
+  }
 }
