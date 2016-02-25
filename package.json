@@ -1,0 +1,24 @@
+{
+  "name": "yad-ui",
+  "version": "1.0.0",
+  "description": "UI for Yet Another Dapper ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yet-another-dapper/ui.git"
+  },
+  "keywords": [
+    "dapper",
+    "tracing",
+    "electron"
+  ],
+  "author": "Kostya Golikov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yet-another-dapper/ui/issues"
+  },
+  "homepage": "https://github.com/yet-another-dapper/ui#readme"
+}
