@@ -17,44 +17,30 @@
       <link href="jumbotron-narrow.css" rel="stylesheet">
   </head>
   <body>
-    <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-          </ul>
-        </nav>
-        <h3 class="text-muted">YAD!</h3>
+    <div class="bs-component" id="top-nav-bar">
+      <div class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse">
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">UI</a>
+          </div>
+          <div class="navbar-collapse collapse navbar-inverse navbar-right">
+            <form class="navbar-form navbar-left" action="javascript:alert(this.nodeType);">
+              <div class="form-group is-empty">
+                <input type="search" class="form-control col-md-8" placeholder="Search" autofocus>
+              <span class="material-input"></span></div>
+            </form>
+          </div>
+        </div>
       </div>
-
+    </div>
+    <div class="container-fluid">
       <div class="jumbotron">
         <h1>Jumbotron heading</h1>
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
         <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
-
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
       </div>
 
       <footer class="footer">
