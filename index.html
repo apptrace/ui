@@ -2,19 +2,20 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta content="utf-8" http-equiv="encoding">
     <title>UI for Yet Another Dapper</title>
-      <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-      <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-      <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-      <!-- Bootstrap -->
-      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/ripplejs/ripple/0.3.2/dist/ripple.js">
 
-      <!-- Bootstrap Material Design -->
-      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/bootstrap-material-design.css">
-      <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/ripplejs/ripple/0.3.2/dist/ripple.js">
-
-      <link href="jumbotron-narrow.css" rel="stylesheet">
+    <link href="jumbotron-narrow.css" rel="stylesheet">
   </head>
   <body>
     <div class="bs-component" id="top-nav-bar">
@@ -30,7 +31,8 @@
             <form class="navbar-form navbar-left" action="javascript:alert(this.nodeType);">
               <div class="form-group is-empty">
                 <input type="search" class="form-control col-md-8" placeholder="Search" autofocus>
-              <span class="material-input"></span></div>
+                <span class="material-input"></span>
+              </div>
             </form>
           </div>
         </div>
@@ -39,14 +41,104 @@
     <div class="container-fluid">
       <div class="jumbotron">
         <h1>Jumbotron heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
+        <div id="chartId"></div>
       </div>
 
       <footer class="footer">
         <p>&copy; 2016 Kostya Golikov</p>
       </footer>
 
-    </div> <!-- /container -->
+    </div>
+    <!-- /container -->
+
+    <script type="text/javascript">
+      const d3 = require("d3")
+
+      const traces = [
+        {
+          "id": "521dcdf0-cf65-440f-83e1-8d5041a489cb",
+          "desciption": "Simple web-service that queries database",
+          "spans": [
+            {
+              "id": 0,
+              "parent_id": -1,
+              "description": "Call to MySQL",
+              "unix_timestamp": 1456822341,
+              "duration_ms": 1000
+            }, {
+              "id": 1,
+              "parent_id": 0,
+              "description": "Processing data fetched from MySQL",
+              "unix_timestamp": 1456823350,
+              "duration_ms": 100
+            }
+          ]
+        }, {
+          "id": "06b7d54f-319d-43a2-98aa-3d2f2b10c783",
+          "describe": "Example of call that has no spans yet",
+          "spans": []
+        }, {
+          "id": "be5f9232-bf8e-4d12-b70f-fe075bb9b6a6",
+          "description": "Trace of jenkins job",
+          "spans": [
+            {
+              "id": 0,
+              "parent_id": -1,
+              "description": "Git checkout",
+              "unix_timestamp": 1456822341,
+              "duration_ms": 1000
+            }, {
+              "id": 1,
+              "parent_id": 0,
+              "description": "MVN clean + test",
+              "unix_timestamp": 1456823341,
+              "duration_ms": 50182000
+            }, {
+              "id": 2,
+              "parent_id": 1,
+              "description": "MVN deploy",
+              "unix_timestamp": 1456823391,
+              "duration_ms": 15800
+            }
+          ]
+        }
+      ]
+
+      const tracesData = traces[2].spans
+
+      const svg = d3.select("div#chartId")
+        .append("div")
+        .classed("svg-container", true) //container class to make it responsive
+        .append("svg")
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 600 400")
+        .classed("svg-content-responsive", true);
+
+      const rects = svg.selectAll('rect').data(tracesData);
+
+      const newRects = rects.enter();
+
+      const minTime = d3.min(tracesData, (x, i) => x.unix_timestamp);
+      const maxTime = d3.max(tracesData, (x, i) => x.unix_timestamp);
+
+      const minId = d3.min(tracesData, (x, i) => x.id);
+      const maxId = d3.max(tracesData, (x, i) => x.id);
+
+      const minDuration = d3.min(tracesData, (x, i) => x.duration_ms);
+      const maxDuration = d3.max(tracesData, (x, i) => x.duration_ms);
+
+      const xScale = d3.scale.log().domain([minTime, maxTime]).range([0, 100]);
+      const widthScale = d3.scale.log().domain([minDuration, maxDuration]).range([10, 100]);
+
+      const yScale = d3.scale.linear().domain([minId, maxId]).range([0, 100]);
+
+      newRects
+        .append('rect')
+        .attr("class", d => "rect")
+        .attr('x', (d, i) => xScale(d.unix_timestamp))
+        .attr('y', (d, i) => yScale(d.id))
+        .attr('height', (d, i) => 20)
+        .attr('width', (d, i) => widthScale(d.duration_ms));
+    </script>
   </body>
 </html>
