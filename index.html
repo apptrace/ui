@@ -40,7 +40,7 @@
     </div>
     <div class="container-fluid">
       <div class="jumbotron">
-        <h1>Jumbotron heading</h1>
+        <h1 id="trace-description">Jumbotron heading</h1>
         <div id="chartId"></div>
       </div>
 
@@ -53,6 +53,7 @@
 
     <script type="text/javascript">
       const d3 = require("d3")
+
 
       const traces = [
         {
@@ -86,18 +87,18 @@
               "parent_id": -1,
               "description": "Git checkout",
               "unix_timestamp": 1456822341,
-              "duration_ms": 1000
+              "duration_ms": 20000
             }, {
               "id": 1,
               "parent_id": 0,
               "description": "MVN clean + test",
-              "unix_timestamp": 1456823341,
-              "duration_ms": 50182000
+              "unix_timestamp": 1456822361,
+              "duration_ms": 50182
             }, {
               "id": 2,
               "parent_id": 1,
               "description": "MVN deploy",
-              "unix_timestamp": 1456823391,
+              "unix_timestamp": 1456874361,
               "duration_ms": 15800
             }
           ]
@@ -114,12 +115,14 @@
         .attr("viewBox", "0 0 600 400")
         .classed("svg-content-responsive", true);
 
+      d3.select('#trace-description').text(traces[2].description)
+
       const rects = svg.selectAll('rect').data(tracesData);
 
       const newRects = rects.enter();
 
       const minTime = d3.min(tracesData, (x, i) => x.unix_timestamp);
-      const maxTime = d3.max(tracesData, (x, i) => x.unix_timestamp);
+      const maxTime = d3.max(tracesData, (x, i) => x.unix_timestamp + x.duration_ms);
 
       const minId = d3.min(tracesData, (x, i) => x.id);
       const maxId = d3.max(tracesData, (x, i) => x.id);
@@ -127,18 +130,26 @@
       const minDuration = d3.min(tracesData, (x, i) => x.duration_ms);
       const maxDuration = d3.max(tracesData, (x, i) => x.duration_ms);
 
-      const xScale = d3.scale.log().domain([minTime, maxTime]).range([0, 100]);
-      const widthScale = d3.scale.log().domain([minDuration, maxDuration]).range([10, 100]);
+      const xScale = d3.scale.log().domain([minTime, maxTime]).range([0, 300]);
+      const widthScale = d3.scale.log().domain([minDuration, maxDuration]).range([1, 300]);
 
-      const yScale = d3.scale.linear().domain([minId, maxId]).range([0, 100]);
+      const yScale = d3.scale.linear().domain([0, maxId]).range([0, 100]);
 
       newRects
         .append('rect')
         .attr("class", d => "rect")
         .attr('x', (d, i) => xScale(d.unix_timestamp))
         .attr('y', (d, i) => yScale(d.id))
-        .attr('height', (d, i) => 20)
-        .attr('width', (d, i) => widthScale(d.duration_ms));
+        .attr('height', (d, i) => 40)
+        .attr('width', (d, i) => widthScale(d.duration_ms))
+
+      newRects
+        .append('text')
+        .attr('class', 'span-label')
+        .attr('x', (d, i) => xScale(d.unix_timestamp) + 10)
+        .attr('y', (d, i) => yScale(d.id) + 35)
+        .attr('fill', 'grey')
+        .text((d, i) => d.description);
     </script>
   </body>
 </html>
