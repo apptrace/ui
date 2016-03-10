@@ -9,4 +9,5 @@ app.on('ready', function() {
   })
 
   mainWindow.loadURL('file://' + __dirname + '/index.html')
+  mainWindow.openDevTools()
 })
