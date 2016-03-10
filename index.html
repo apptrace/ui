@@ -65,8 +65,6 @@
       function draw_traces(trace_data) {
         const spans = trace_data.spans
 
-        console.log('drawing: ', trace_data)
-
         d3.select('#trace-description').text(trace_data.description)
 
         const rects = svg.selectAll('rect').data(spans);
@@ -103,60 +101,10 @@
           .text((d, i) => d.description);
       }
 
-      const traces = [
-        {
-          "id": "521dcdf0-cf65-440f-83e1-8d5041a489cb",
-          "description": "Simple web-service that queries database",
-          "spans": [
-            {
-              "id": 0,
-              "parent_id": -1,
-              "description": "Call to MySQL",
-              "unix_timestamp": 1456822341,
-              "duration_ms": 1000
-            }, {
-              "id": 1,
-              "parent_id": 0,
-              "description": "Processing data fetched from MySQL",
-              "unix_timestamp": 1456823350,
-              "duration_ms": 100
-            }
-          ]
-        }, {
-          "id": "06b7d54f-319d-43a2-98aa-3d2f2b10c783",
-          "description": "Example of call that has no spans yet",
-          "spans": []
-        }, {
-          "id": "be5f9232-bf8e-4d12-b70f-fe075bb9b6a6",
-          "description": "Trace of jenkins job",
-          "spans": [
-            {
-              "id": 0,
-              "parent_id": -1,
-              "description": "Git checkout",
-              "unix_timestamp": 1456822341,
-              "duration_ms": 20000
-            }, {
-              "id": 1,
-              "parent_id": 0,
-              "description": "MVN clean + test",
-              "unix_timestamp": 1456822361,
-              "duration_ms": 50182
-            }, {
-              "id": 2,
-              "parent_id": 1,
-              "description": "MVN deploy",
-              "unix_timestamp": 1456874361,
-              "duration_ms": 15800
-            }
-          ]
-        }
-      ]
-
-      draw_traces(traces[0])
-
-
-
+      d3.json('http://private-909e2-dapper.apiary-mock.com/traces/1', (trace) => {
+        console.log('got data: ', trace)
+        draw_traces(trace[0])
+      })
     </script>
   </body>
 </html>
