@@ -30,7 +30,7 @@ define(['jquery', 'd3'], (jquery, d3) => {
     const minTime = d3.min(spans, (x, i) => x.unix_timestamp);
     const maxTime = d3.max(spans, (x, i) => x.unix_timestamp + x.duration_ms);
     const marks = range(minTime, maxTime, timelineStepMs);
-    const xScale = d3.scale.log().domain([minTime, maxTime]).range([30, 600])
+    const xScale = d3.scale.log().domain([minTime, maxTime]).range([20, 600])
     
     const lines = svg.selectAll('line').data(marks);
     const newLines = lines.enter();
@@ -39,19 +39,19 @@ define(['jquery', 'd3'], (jquery, d3) => {
         .attr('class', 'timeline-mark')
         .attr('x1', (d, i) => xScale(d))
         .attr('x2', (d, i) => xScale(d))
-        .attr('y1', 10)
+        .attr('y1', 20)
         .attr('y2', 290);
 
     newLines.append('text')
       .attr('class', 'time-label')
-      .attr('x', (d,i) => xScale(d))
+      .attr('x', (d,i) => xScale(d) - 10)
       .attr('y', (d,i) => 10)
       .text((d, i) => d - minTime + 'ms');
 
     newLines.append('text')
       .attr('class', 'time-label')
-      .attr('x', (d,i) => xScale(d))
-      .attr('y', (d,i) => 290)
+      .attr('x', (d,i) => xScale(d) - 10)
+      .attr('y', (d,i) => 310)
       .text((d, i) => d - minTime + 'ms');
   }  
 
@@ -78,7 +78,7 @@ define(['jquery', 'd3'], (jquery, d3) => {
     const xScale = d3.scale.log().domain([minTime, maxTime]).range([30, 300]);
     const widthScale = d3.scale.log().domain([minDuration, maxDuration]).range([1, 300]);
 
-    const yScale = d3.scale.linear().domain([0, maxId]).range([10, 100]);
+    const yScale = d3.scale.linear().domain([0, maxId]).range([20, 100]);
     
     newRects
       .append('rect')
