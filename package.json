@@ -1,14 +1,14 @@
 {
-  "name": "yad-ui",
+  "name": "apptrace",
   "version": "1.0.0",
-  "description": "UI for Yet Another Dapper ",
+  "description": "Apptrace -- UI for yet another dapper-like tracer framework",
   "main": "index.js",
   "scripts": {
     "start": "electron ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yet-another-dapper/ui.git"
+    "url": "git+https://github.com/apptrace/ui.git"
   },
   "keywords": [
     "dapper",
@@ -18,9 +18,9 @@
   "author": "Kostya Golikov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yet-another-dapper/ui/issues"
+    "url": "https://github.com/apptrace/ui/issues"
   },
-  "homepage": "https://github.com/yet-another-dapper/ui#readme",
+  "homepage": "https://github.com/apptrace/ui#readme",
   "devDependencies": {
     "bootstrap-material-design": "^0.5.8",
     "electron-prebuilt": "^0.36.8",
