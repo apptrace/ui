@@ -47,8 +47,20 @@ body {
 }
 
 .trace-description {
-  font-size: 19px;
+  font-size: 14px;
   fill: white;
+}
+
+.time-label {
+  font-size: 10px;
+  fill: white;
+  opacity: 0.5;
+}
+
+.timeline-mark {
+  stroke: white;
+  stroke-width: 1;
+  stroke-opacity: 0.1;
 }
 
 /* Responsive: Portrait tablets and up */
@@ -97,10 +109,6 @@ svg {
 
 .label-value {
   fill-opacity: 0.8;
-}
-
-.label--negative {
-  text-anchor: start;
 }
 
 .svg-container {

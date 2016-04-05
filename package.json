@@ -2,7 +2,7 @@
   "name": "apptrace",
   "version": "1.0.0",
   "description": "Apptrace -- UI for yet another dapper-like tracer framework",
-  "main": "index.js",
+  "main" : "electron.js",
   "scripts": {
     "start": "electron ."
   },
